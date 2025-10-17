@@ -1,13 +1,14 @@
 ### Prerequisites
 
-You need to have **Python** installed on your system.
+1. You need to have **Python** installed on your system.
+2. You must open the game_demo.pdf in **Google Chrome or Opera** browser.
 
 ### Step 1: Install Python and Verify Setup
 
 1.  **Download and install Python for Windows:**
 
       * Go to the official Python website.
-      * **Crucially, during installation, make sure to check the box that says "Add Python to PATH" or "Add python.exe to PATH".**
+      * Crucially, during installation, make sure to check the box that says **"Add Python to PATH" or "Add python.exe to PATH".**
 
 2.  **Verify the installation:**
 
@@ -30,7 +31,6 @@ You need to have **Python** installed on your system.
 ### Step 3: Navigate to the Project Folder
 
 1.  Open your Command Prompt (CMD) or PowerShell.
-
 2.  Navigate to the root directory of the extracted project folder using the `cd` command.
 
     *Example:*
@@ -92,4 +92,4 @@ Remove manually this code. This code snippet is used to automatically open the P
     python .\pdf_generator.py
     ```
 
-The script should now execute and generate the intended output file "game_demo.pdf" in your project folder.
+The script should now execute and generate the intended output file **"game_demo.pdf"** in your project folder.
