@@ -55,7 +55,7 @@
 Remove manually this code. This code snippet is used to automatically open the PDF in the Opera browser on my local machine.
 
 1.  Open the file **`pdf_generator.py`** in VS Code.
-2.  **Find and remove** the following block of code (:
+2.  **Find and remove** the following block of code:
     ```python
     # Absolute path of the generated PDF
     pdf_path = os.path.abspath("game_demo.pdf")
@@ -84,12 +84,16 @@ Remove manually this code. This code snippet is used to automatically open the P
 
 ### Step 6: Run the Script in VS Code
 
-1.  **Open Visual Studio Code (VS Code).**
+1.  Open Visual Studio Code (VS Code).
 2.  Go to **File \> Open Folder** and select the root project folder you extracted in Step 2.
-3.  Open the Integrated Terminal in VS Code (**Terminal \> New Terminal**).
-4.  Run the main script:
+3.  Open the Integrated Terminal in VS Code (Terminal \> New Terminal).
+4.  Run the generator script:
     ```bash
     python .\pdf_generator.py
     ```
 
 The script should now execute and generate the intended output file **"game_demo.pdf"** in your project folder.
+
+### Video - Gameplay
+
+Full gameplay video of the game inside a pdf document: https://www.youtube.com/watch?v=bzbTFK3NDpw
