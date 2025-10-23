@@ -1,54 +1,62 @@
 /**** Variable Declarations ****/
 
-var posX;
-var posY;
+const DEFAULT_BALL_Y = 430;
+const INITIAL_VELOCITY = 1;
+const INITIAL_SCORE = 0;
+const MARGIN = 10;
 
-var dirX;
-var dirY;
-
-var stripes;
-var score;
-var margin = 10; // Prevents the ball from starting inside the wall
-var ball_width = BALL_WIDTH;
-var ball_height = BALL_HEIGHT;
-var newGameActive = false;
+let posX; 
+let posY;
+let dirX; 
+let dirY; 
+let score;
+let speed;
+let stripes;
+let newGameActive = false;
+let ball_width_val = BALL_WIDTH;
+let ball_height_val = BALL_HEIGHT;
 
 // These variables must be synchronized with the ones created in pdf_generator.py
-var ball = this.getField('ball');
-var bar = this.getField('bar');
-var instruction = this.getField('instruction');
-var scoreArea = this.getField('scoreArea');
-var newGameButton = this.getField('newGameButton');
-var start_screen = this.getField('start_screen'); // NEW: start screen overlay
-var renderer = this.getField('renderer');
-// app.alert(button ? "Field exists" : "Field does NOT exist");
+let instruction = this.getField('instruction');
+let newGameButton = this.getField('newGameButton');
+let ball = this.getField('ball');
+let bar = this.getField('bar');
+let scoreArea = this.getField('scoreArea');
+let start_screen = this.getField('start_screen'); // NEW: start screen overlay
+let renderer = this.getField('renderer');
 
 
 /**** Functions ****/
 
 function initialize() {
-    if (global.initialized) return; // Prevent multiple initializations
-    if (newGameActive) {
+    if (global.initialized) return; // Prevent multiple initializations    
+    if (newGameActive) {        
         global.initialized = true;
-        setupGame();
+        setupGame();        
         startGame();
-    } else {
-        deactivateAll(); // Hide all game fields until 'New Game' is pressed
+    } else {        
+        resetGameView(); // Hide all game fields until 'New Game' is pressed
     }
 }
 
 // Initialize game parameters
 function setupGame() {
-    posX = Math.floor(Math.random() * (CANVAS_WIDTH - ball_width - margin * 2)) + margin;
-    posY = 430;
+    posX = randomBallX();
+    posY = DEFAULT_BALL_Y;
     dirX = 2;
     dirY = 2;
-
     stripes = []; // Mouse tracker
-    speed = 1; // Ball speed
-    score = 0;  
-    global.mouseX = posX + ball_width / 2;
-  
+    speed = INITIAL_VELOCITY; // Ball speed
+    score = INITIAL_SCORE;  
+    global.mouseX = posX + ball_width_val / 2;
+    hideStripes();    
+}
+
+function randomBallX(){
+    return (Math.floor(Math.random() * (CANVAS_WIDTH - ball_width_val - MARGIN * 2)) + MARGIN);
+}
+
+function hideStripes(){
     // Hide all stripes until the game starts
     for (var fx = 0; fx < CANVAS_WIDTH; fx++) {
         stripes[fx] = this.getField('stripe' + fx);
@@ -71,7 +79,8 @@ function renderGame() {
             global.initialized = true; // Game initialized flag
         }
         renderer.display = display.visible;
-        draw();    
+        draw();
+        update();
         renderer.display = display.hidden;
     } catch (e) {
         app.alert(e.toString());
@@ -79,24 +88,27 @@ function renderGame() {
 }
 
 // Main game function that dynamically draws all components on screen
-function draw() {  
+function draw() {    
     drawBall();
     drawBar();  
     drawScore();
+}
+
+function update(){
     checkCollision();
     moveBall(speed);
 }
 
 function checkCollision() {    
-    if (posX + dirX > CANVAS_WIDTH - ball_width || posX + dirX < 0) {
+    if (posX + dirX > CANVAS_WIDTH - ball_width_val || posX + dirX < 0) {
         dirX = -dirX;    
     }
 
-    if (posY + dirY > CANVAS_BASE + CANVAS_HEIGHT - ball_height) {
+    if (posY + dirY > CANVAS_BASE + CANVAS_HEIGHT - ball_height_val) {
         dirY = -dirY;    
 
     } else if (posY + dirY < BAR_BASE_DISTANCE + BAR_HEIGHT) {
-        if (posX + ball_width > barPosX() && posX < barPosX() + BAR_WIDTH) {
+        if (posX + ball_width_val > barPosX() && posX < barPosX() + BAR_WIDTH) {
             dirY = -dirY; // Reverse ball direction
             speed = changeBallSpeed(1.2); // Increase speed with each bar hit
             changeBallSize(1.2, 1.2); // Shrink ball slightly each hit
@@ -117,20 +129,20 @@ function changeBallSpeed(multiplier) {
 }
 
 function changeBallSize(divisorHeight, divisorWidth) {  
-    ball_height = ball_height / divisorHeight;
-    ball_width = ball_width / divisorWidth;
+    ball_height_val = ball_height_val / divisorHeight;
+    ball_width_val = ball_width_val / divisorWidth;
 }
 
 function endGame() {
     global.initialized = false;
     app.clearInterval(gameLoop); // Stop game loop
-    ball_width = BALL_WIDTH; // Reset ball width
-    ball_height = BALL_HEIGHT; // Reset ball height
+    ball_width_val = BALL_WIDTH; // Reset ball width
+    ball_height_val = BALL_HEIGHT; // Reset ball height
     score = 0; // Reset score
     initialize();
 }
 
-function deactivateAll() {
+function resetGameView() {
     var fields = ['ball','bar','scoreArea','renderer'];
 
     for (var i = 0; i < fields.length; i++) {
@@ -154,7 +166,7 @@ function moveBall(speedValue) {
 
 function drawBall() {
     ball.rect = [
-        posX, posY, posX + ball_width, posY + ball_height
+        posX, posY, posX + ball_width_val, posY + ball_height_val
     ];
 }
 

@@ -49,7 +49,7 @@ bar = create_field(
     'bar',
     x=(CANVAS_WIDTH - BAR_WIDTH)/2, y=BAR_BASE_DISTANCE,
     width=BAR_WIDTH, height=BAR_HEIGHT,
-    r=0.7, g=0.1, b=0
+    r=0.7, g=0.1, b=0 # Brown color
 )
 fields.append(bar)
 
@@ -118,7 +118,7 @@ newGameButton = create_button(
     label="New Game",
     js_action="onNewGameClick()"
 )
-newGameButton.DA = "/Cour 18 Tf 0 0 0 rg"
+newGameButton.DA = "/Cour 18 Tf 0 0 0 rg" # Font Text
 fields.append(newGameButton)
 
 # Instruction (fixed visual field)
